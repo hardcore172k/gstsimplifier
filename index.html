@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GST Simplifier - Smart Invoicing for Freelancers & Creators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#2563eb",
+              secondary: "#1e40af",
+              accent: "#f59e0b",
+              success: "#10b981",
+              dark: "#1f2937",
+            },
+          },
+        },
+      };
+    </script>
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <span class="text-2xl font-bold text-primary"
+                >💼 GST Simplifier</span
+              >
+            </div>
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#features"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Features</a
+            >
+            <a
+              href="#pricing"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Pricing</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Contact</a
+            >
+            <button
+              class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-secondary transition-colors"
+            >
+              Get Started
+            </button>
+          </div>
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-btn" class="text-gray-700">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile menu -->
+      <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="#features" class="block px-3 py-2 text-gray-700">Features</a>
+          <a href="#pricing" class="block px-3 py-2 text-gray-700">Pricing</a>
+          <a href="#contact" class="block px-3 py-2 text-gray-700">Contact</a>
+          <button
+            class="w-full text-left bg-primary text-white px-3 py-2 rounded-lg mt-2"
+          >
+            Get Started
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg pt-20 pb-16 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 class="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              Smart Invoicing.<br />
+              Easy Filing.<br />
+              <span class="text-accent">More Savings.</span>
+            </h1>
+            <p class="text-xl mb-8 text-gray-100">
+              An AI-powered GST platform that simplifies taxation for
+              solopreneurs, freelancers, and creators.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button
+                onclick="openSignupModal()"
+                class="bg-accent text-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors"
+              >
+                Start Free Trial
+              </button>
+              <button
+                class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-dark transition-colors"
+              >
+                Watch Demo
+              </button>
+            </div>
+          </div>
+          <div class="animate-float">
+            <div
+              class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20"
+            >
+              <div class="text-center mb-6">
+                <div class="text-6xl mb-4">🤖</div>
+                <h3 class="text-2xl font-semibold">AI Tax Assistant</h3>
+              </div>
+              <div class="space-y-4">
+                <div class="bg-white/20 rounded-lg p-4">
+                  <p class="text-sm">"How to save ₹30K this quarter?"</p>
+                </div>
+                <div class="bg-accent/20 rounded-lg p-4">
+                  <p class="text-sm">
+                    💡 Here's your actionable savings plan...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-dark mb-4">
+            🎯 Perfect for Modern Creators
+          </h2>
+          <p class="text-xl text-gray-600">
+            Designed specifically for India's growing creator economy
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div
+            class="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-100"
+          >
+            <div class="text-4xl mb-4">💻</div>
+            <h3 class="text-lg font-semibold mb-2">Freelancers</h3>
+            <p class="text-gray-600">
+              Fiverr, Upwork, Freelancer.com professionals
+            </p>
+          </div>
+          <div
+            class="text-center p-6 rounded-xl bg-gradient-to-br from-red-50 to-pink-100"
+          >
+            <div class="text-4xl mb-4">📺</div>
+            <h3 class="text-lg font-semibold mb-2">Content Creators</h3>
+            <p class="text-gray-600">YouTubers, Influencers, UGC Creators</p>
+          </div>
+          <div
+            class="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-emerald-100"
+          >
+            <div class="text-4xl mb-4">🎨</div>
+            <h3 class="text-lg font-semibold mb-2">Professionals</h3>
+            <p class="text-gray-600">Consultants, Designers, Developers</p>
+          </div>
+          <div
+            class="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-violet-100"
+          >
+            <div class="text-4xl mb-4">🚀</div>
+            <h3 class="text-lg font-semibold mb-2">Entrepreneurs</h3>
+            <p class="text-gray-600">Small D2C founders and solopreneurs</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features -->
+    <section id="features" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-dark mb-4">
+            💡 Powerful Features
+          </h2>
+          <p class="text-xl text-gray-600">
+            Everything you need to manage GST compliance effortlessly
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">🧾</div>
+            <h3 class="text-xl font-semibold mb-3">Smart Invoice Generator</h3>
+            <p class="text-gray-600 mb-4">
+              Auto-generate GST invoices (IGST/CGST/SGST, RCM ready) with your
+              branding
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Multi-currency support</li>
+              <li>• Professional templates</li>
+              <li>• Instant PDF generation</li>
+            </ul>
+          </div>
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">🔁</div>
+            <h3 class="text-xl font-semibold mb-3">
+              Income & Expense Tracking
+            </h3>
+            <p class="text-gray-600 mb-4">
+              Track via bank sync, CSVs, UPI, or manual entry with smart
+              categorization
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Auto-categorization</li>
+              <li>• Receipt scanning</li>
+              <li>• Real-time sync</li>
+            </ul>
+          </div>
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">📅</div>
+            <h3 class="text-xl font-semibold mb-3">Auto GST Filing</h3>
+            <p class="text-gray-600 mb-4">
+              Auto-remind and file GSTR-1 & GSTR-3B returns with one-click
+              submission
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Deadline reminders</li>
+              <li>• Pre-filled forms</li>
+              <li>• GSTN API integration</li>
+            </ul>
+          </div>
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">💡</div>
+            <h3 class="text-xl font-semibold mb-3">Tax Optimization</h3>
+            <p class="text-gray-600 mb-4">
+              Suggest eligible deductions, ITC, and personalized savings
+              strategies
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Deduction suggestions</li>
+              <li>• ITC optimization</li>
+              <li>• Savings calculator</li>
+            </ul>
+          </div>
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">🤖</div>
+            <h3 class="text-xl font-semibold mb-3">AI Tax Coach</h3>
+            <p class="text-gray-600 mb-4">
+              Ask questions like "How to save ₹30K this quarter?" and get
+              actionable plans
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• 24/7 AI assistance</li>
+              <li>• Personalized advice</li>
+              <li>• Compliance tips</li>
+            </ul>
+          </div>
+          <div class="feature-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-4xl mb-4">🔐</div>
+            <h3 class="text-xl font-semibold mb-3">Secure & India-Ready</h3>
+            <p class="text-gray-600 mb-4">
+              WhatsApp receipts, UPI exports, regional UX with bank-grade
+              security
+            </p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• AES-256 encryption</li>
+              <li>• OTP authentication</li>
+              <li>• GSTN compliance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-dark mb-4">
+            🔄 Seamless Integrations
+          </h2>
+          <p class="text-xl text-gray-600">
+            Connect with all your favorite platforms and tools
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl mb-2">💳</div>
+            <h4 class="font-semibold">UPI Apps</h4>
+            <p class="text-sm text-gray-600">GPay, PhonePe, Paytm</p>
+          </div>
+          <div
+            class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl mb-2">🏦</div>
+            <h4 class="font-semibold">Bank Accounts</h4>
+            <p class="text-sm text-gray-600">Via account aggregators</p>
+          </div>
+          <div
+            class="bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl mb-2">🎬</div>
+            <h4 class="font-semibold">Creator Platforms</h4>
+            <p class="text-sm text-gray-600">YouTube, Fiverr, etc.</p>
+          </div>
+          <div
+            class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center"
+          >
+            <div class="text-3xl mb-2">📱</div>
+            <h4 class="font-semibold">Communication</h4>
+            <p class="text-sm text-gray-600">WhatsApp & Email</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-dark mb-4">
+            💰 Simple, Transparent Pricing
+          </h2>
+          <p class="text-xl text-gray-600">
+            Choose the plan that fits your business needs
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div class="pricing-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-center mb-6">
+              <h3 class="text-2xl font-bold mb-2">Free</h3>
+              <div class="text-4xl font-bold text-primary mb-2">₹0</div>
+              <p class="text-gray-600">Perfect for getting started</p>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Invoice Generator
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Basic Dashboard
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Up to 10 invoices/month
+              </li>
+              <li class="flex items-center">
+                <span class="text-gray-400 mr-2">✗</span> GST Filing
+              </li>
+              <li class="flex items-center">
+                <span class="text-gray-400 mr-2">✗</span> AI Coach
+              </li>
+            </ul>
+            <button
+              class="w-full bg-gray-200 text-dark py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >
+              Get Started Free
+            </button>
+          </div>
+          <div
+            class="pricing-card bg-primary text-white p-8 rounded-xl shadow-lg relative"
+          >
+            <div
+              class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-accent text-dark px-4 py-1 rounded-full text-sm font-semibold"
+            >
+              Most Popular
+            </div>
+            <div class="text-center mb-6">
+              <h3 class="text-2xl font-bold mb-2">Pro</h3>
+              <div class="text-4xl font-bold mb-2">
+                ₹299<span class="text-lg">/month</span>
+              </div>
+              <p class="text-blue-100">For growing businesses</p>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <span class="text-accent mr-2">✓</span> Everything in Free
+              </li>
+              <li class="flex items-center">
+                <span class="text-accent mr-2">✓</span> GST Filing (GSTR-1 & 3B)
+              </li>
+              <li class="flex items-center">
+                <span class="text-accent mr-2">✓</span> Expense Tracker
+              </li>
+              <li class="flex items-center">
+                <span class="text-accent mr-2">✓</span> Deduction Suggestions
+              </li>
+              <li class="flex items-center">
+                <span class="text-accent mr-2">✓</span> Unlimited invoices
+              </li>
+            </ul>
+            <button
+              class="w-full bg-accent text-dark py-3 rounded-lg font-semibold hover:bg-yellow-400 transition-colors"
+            >
+              Start Pro Trial
+            </button>
+          </div>
+          <div class="pricing-card bg-white p-8 rounded-xl shadow-lg">
+            <div class="text-center mb-6">
+              <h3 class="text-2xl font-bold mb-2">Premium</h3>
+              <div class="text-4xl font-bold text-primary mb-2">
+                ₹499<span class="text-lg">/month</span>
+              </div>
+              <p class="text-gray-600">For power users</p>
+            </div>
+            <ul class="space-y-3 mb-8">
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Everything in Pro
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> AI Tax Coach
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Advanced Tax Planning
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Priority Support
+              </li>
+              <li class="flex items-center">
+                <span class="text-success mr-2">✓</span> Custom Reports
+              </li>
+            </ul>
+            <button
+              class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors"
+            >
+              Start Premium Trial
+            </button>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <p class="text-gray-600 mb-4">Need human CA support?</p>
+          <div class="inline-block bg-white p-4 rounded-lg shadow">
+            <span class="font-semibold">Add-on: Human CA Support</span>
+            <span class="text-primary font-bold ml-2">₹999/year</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-bg text-white">
+      <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold mb-6">Ready to Simplify Your GST?</h2>
+        <p class="text-xl mb-8 text-gray-100">
+          Join thousands of freelancers and creators who've already simplified
+          their tax compliance
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onclick="openSignupModal()"
+            class="bg-accent text-dark px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-400 transition-colors"
+          >
+            Start Your Free Trial
+          </button>
+          <button
+            class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-dark transition-colors"
+          >
+            Schedule Demo
+          </button>
+        </div>
+        <p class="text-sm text-gray-200 mt-4">
+          No credit card required • 14-day free trial • Cancel anytime
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-dark text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="text-2xl font-bold mb-4">💼 GST Simplifier</div>
+            <p class="text-gray-400 mb-4">
+              Smart invoicing and GST compliance for India's creator economy.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >📧</a
+              >
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >📱</a
+              >
+              <a
+                href="#"
+                class="text-gray-400 hover:text-white transition-colors"
+                >🐦</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Product</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Features</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Pricing</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Integrations</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">API</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Support</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >GST Guide</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Webinars</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Company</h4>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors">About</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors">Blog</a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Careers</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Privacy</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"
+        >
+          <p>
+            © 2024 GST Simplifier. All rights reserved. Made with ❤️ for India's
+            creators.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Signup Modal -->
+    <div
+      id="signupModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div class="bg-white p-6 rounded-lg w-full max-w-md relative">
+        <button
+          onclick="closeSignupModal()"
+          class="absolute top-2 right-2 text-gray-400 hover:text-black text-xl"
+        >
+          ×
+        </button>
+        <h2 class="text-2xl font-bold mb-4 text-center text-primary">
+          Create Your Account
+        </h2>
+
+        <input
+          type="text"
+          id="signupMobile"
+          placeholder="Mobile Number (e.g. 9876543210)"
+          class="w-full border px-4 py-2 rounded mb-3"
+        />
+        <input
+          type="email"
+          id="signupEmail"
+          placeholder="Email Address"
+          class="w-full border px-4 py-2 rounded mb-3"
+        />
+        <input
+          type="password"
+          id="signupPassword"
+          placeholder="Create Password"
+          class="w-full border px-4 py-2 rounded mb-3"
+        />
+
+        <!-- CAPTCHA -->
+        <div class="flex items-center justify-between mb-3">
+          <span class="font-mono text-sm" id="captchaCode">AB12C</span>
+          <button
+            onclick="generateCaptcha()"
+            class="text-sm text-primary underline"
+          >
+            Refresh
+          </button>
+        </div>
+        <input
+          type="text"
+          id="captchaInput"
+          placeholder="Enter CAPTCHA"
+          class="w-full border px-4 py-2 rounded mb-3"
+        />
+
+        <!-- OTP -->
+        <div class="flex gap-2 mb-3">
+          <input
+            type="text"
+            id="otpInput"
+            placeholder="Enter OTP"
+            class="flex-1 border px-4 py-2 rounded"
+          />
+          <button
+            id="sendOtp"
+            class="bg-secondary text-white px-4 rounded hover:bg-primary"
+          >
+            Send OTP
+          </button>
+        </div>
+
+        <!-- Firebase Recaptcha container -->
+        <div id="recaptcha-container" class="mt-3"></div>
+
+        <button
+          id="submitSignup"
+          class="w-full bg-primary text-white px-4 py-2 rounded hover:bg-secondary"
+        >
+          Sign Up
+        </button>
+
+        <p id="signupMessage" class="text-sm mt-3 text-center text-red-600"></p>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getAuth,
+        signInWithPhoneNumber,
+        RecaptchaVerifier,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // Global variables
+      let recaptchaVerifier;
+      let confirmationResult;
+
+      window.sendOtp = async () => {
+        const phoneInput = document.getElementById("phoneNumber").value.trim();
+        const fullPhone = "+91" + phoneInput;
+
+        if (!/^[6-9]\d{9}$/.test(phoneInput)) {
+          return showMessage("Invalid phone number");
+        }
+
+        try {
+          if (!recaptchaVerifier) {
+            recaptchaVerifier = new RecaptchaVerifier(
+              auth,
+              "recaptcha-container",
+              {
+                size: "invisible",
+                callback: (response) => {
+                  console.log("reCAPTCHA solved");
+                },
+              }
+            );
+            await recaptchaVerifier.render();
+          }
+
+          confirmationResult = await signInWithPhoneNumber(
+            auth,
+            fullPhone,
+            recaptchaVerifier
+          );
+          document.getElementById("otpSection").classList.remove("hidden");
+          showMessage("OTP sent successfully", "green");
+        } catch (error) {
+          console.error("OTP Error:", error);
+          showMessage(error.message);
+        }
+      };
+
+      window.verifyOtp = async () => {
+        const otpCode = document.getElementById("otpCode").value.trim();
+
+        if (!otpCode) return showMessage("Enter OTP code");
+
+        try {
+          const result = await confirmationResult.confirm(otpCode);
+          showMessage(
+            "Phone verified. User signed in: " + result.user.phoneNumber,
+            "green"
+          );
+        } catch (error) {
+          console.error("OTP Verification Error:", error);
+          showMessage("Invalid OTP. Please try again.");
+        }
+      };
+
+      function showMessage(msg, color = "red") {
+        const el = document.getElementById("message");
+        el.innerText = msg;
+        el.className = `mt-3 text-sm text-center text-${color}-600`;
+      }
+    </script>
+  </body>
+</html>
