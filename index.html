@@ -669,91 +669,90 @@
     <script src="script.js" defer></script>
 
     <!-- Your Firebase JS Auth Module -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getAuth,
-    signInWithPhoneNumber,
-    RecaptchaVerifier,
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    <!-- ✅ Replace inside <script type="module"> at bottom -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import {
+        getAuth,
+        signInWithPhoneNumber,
+        RecaptchaVerifier,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  // ✅ Replace with your actual Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
-    authDomain: "gst-simplifier.firebaseapp.com",
-    projectId: "gst-simplifier",
-    storageBucket: "gst-simplifier.appspot.com",
-    messagingSenderId: "704017540712",
-    appId: "1:704017540712:web:df1055d0c25f3db2e23ddd",
-    measurementId: "G-9DF880JR15",
-  };
+      const firebaseConfig = {
+        apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
+        authDomain: "gst-simplifier.firebaseapp.com",
+        projectId: "gst-simplifier",
+        storageBucket: "gst-simplifier.appspot.com",
+        messagingSenderId: "704017540712",
+        appId: "1:704017540712:web:df1055d0c25f3db2e23ddd",
+        measurementId: "G-9DF880JR15",
+      };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
 
-  let recaptchaVerifier;
-  let confirmationResult;
+      let recaptchaVerifier;
+      let confirmationResult;
 
-  window.sendOtp = async () => {
-    const phoneInput = document.getElementById("phoneNumber").value.trim();
-    const fullPhone = "+91" + phoneInput;
+      window.sendOtp = async () => {
+        const phoneInput = document.getElementById("signupMobile").value.trim();
+        const fullPhone = "+91" + phoneInput;
 
-    if (!/^[6-9]\d{9}$/.test(phoneInput)) {
-      return showMessage("Invalid phone number");
-    }
+        if (!/^[6-9]\d{9}$/.test(phoneInput)) {
+          return showMessage("Invalid phone number");
+        }
 
-    try {
-      if (!recaptchaVerifier) {
-        recaptchaVerifier = new RecaptchaVerifier(
-          "recaptcha-container",
-          {
-            size: "invisible",
-            callback: (response) => {
-              console.log("reCAPTCHA solved:", response);
-            },
-          },
-          auth
-        );
-        await recaptchaVerifier.render();
+        try {
+          if (!recaptchaVerifier) {
+            recaptchaVerifier = new RecaptchaVerifier(
+              "recaptcha-container",
+              {
+                size: "invisible",
+                callback: (response) => {
+                  console.log("reCAPTCHA solved:", response);
+                },
+              },
+              auth
+            );
+            await recaptchaVerifier.render();
+          }
+
+          confirmationResult = await signInWithPhoneNumber(
+            auth,
+            fullPhone,
+            recaptchaVerifier
+          );
+
+          document.getElementById("otpSection").classList.remove("hidden");
+          showMessage("OTP sent successfully", "green");
+        } catch (error) {
+          console.error("OTP Error:", error);
+          showMessage(error.message);
+        }
+      };
+
+      window.verifyOtp = async () => {
+        const otpCode = document.getElementById("otpInput").value.trim();
+
+        if (!otpCode) return showMessage("Enter OTP code");
+
+        try {
+          const result = await confirmationResult.confirm(otpCode);
+          showMessage(
+            "Phone verified. User signed in: " + result.user.phoneNumber,
+            "green"
+          );
+        } catch (error) {
+          console.error("OTP Verification Error:", error);
+          showMessage("Invalid OTP. Please try again.");
+        }
+      };
+
+      function showMessage(msg, color = "red") {
+        const el = document.getElementById("signupMessage");
+        el.innerText = msg;
+        el.className = `text-sm mt-3 text-center text-${color}-600`;
       }
-
-      confirmationResult = await signInWithPhoneNumber(
-        auth,
-        fullPhone,
-        recaptchaVerifier
-      );
-
-      document.getElementById("otpSection").classList.remove("hidden");
-      showMessage("OTP sent successfully", "green");
-    } catch (error) {
-      console.error("OTP Error:", error);
-      showMessage(error.message);
-    }
-  };
-
-  window.verifyOtp = async () => {
-    const otpCode = document.getElementById("otpCode").value.trim();
-
-    if (!otpCode) return showMessage("Enter OTP code");
-
-    try {
-      const result = await confirmationResult.confirm(otpCode);
-      showMessage(
-        "Phone verified. User signed in: " + result.user.phoneNumber,
-        "green"
-      );
-    } catch (error) {
-      console.error("OTP Verification Error:", error);
-      showMessage("Invalid OTP. Please try again.");
-    }
-  };
-
-  function showMessage(msg, color = "red") {
-    const el = document.getElementById("message");
-    el.innerText = msg;
-    el.className = `mt-3 text-sm text-center text-${color}-600`;
-  }
-</script>
-
+    </script>
   </body>
 </html>
