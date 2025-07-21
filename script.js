@@ -7,6 +7,40 @@ function log(message) {
   );
 }
 
+// Firebase initialization (outside DOMContentLoaded to ensure early loading)
+const firebaseConfig = {
+  apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
+  authDomain: "gst-simplifier.firebaseapp.com",
+  projectId: "gst-simplifier",
+  storageBucket: "gst-simplifier.firebasestorage.app",
+  messagingSenderId: "704017540712",
+  appId: "1:704017540712:web:df1055d0c25f3db2e23ddd"
+};
+
+let auth, recaptchaVerifier;
+
+try {
+  const app = firebase.initializeApp(firebaseConfig);
+  auth = firebase.getAuth(app);
+  log('Firebase initialized successfully');
+
+  // Use emulator only for local testing
+  if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+    auth.useEmulator('http://localhost:9099');
+    log('Using Firebase emulator for local testing');
+  }
+
+  recaptchaVerifier = new firebase.RecaptchaVerifier('signupPopup', {
+    'size': 'invisible',
+    'callback': (response) => {
+      log('reCAPTCHA solved:', response);
+    }
+  }, auth);
+} catch (error) {
+  log('Firebase initialization failed:', error.message);
+  alert('Firebase initialization failed: ' + error.message + '. Popup will still work, but authentication is disabled.');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   log('Document loaded, initializing event listeners');
 
@@ -107,43 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', openSignupModal);
     log('Event listener added to pricing button');
   });
-
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
-    authDomain: "gst-simplifier.firebaseapp.com",
-    projectId: "gst-simplifier",
-    storageBucket: "gst-simplifier.firebasestorage.app",
-    messagingSenderId: "704017540712",
-    appId: "1:704017540712:web:df1055d0c25f3db2e23ddd"
-    // measurementId removed as it's not needed for auth
-  };
-
-  let auth, recaptchaVerifier;
-
-  try {
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    auth = firebase.getAuth(app);
-    log('Firebase initialized successfully');
-
-    // Use emulator for local testing (e.g., http://127.0.0.1:5501/)
-    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-      auth.useEmulator('http://localhost:9099');
-      log('Using Firebase emulator for local testing');
-    }
-
-    // Initialize reCAPTCHA
-    recaptchaVerifier = new firebase.RecaptchaVerifier('signupPopup', {
-      'size': 'invisible',
-      'callback': (response) => {
-        log('reCAPTCHA solved:', response);
-      }
-    }, auth);
-  } catch (error) {
-    log('Firebase initialization failed:', error.message);
-    alert('Firebase initialization failed: ' + error.message + '. Popup will still work, but authentication is disabled.');
-  }
 
   // Attach OTP handler
   const sendOTPBtn = document.querySelector('#phoneForm button');
