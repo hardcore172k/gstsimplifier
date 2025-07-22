@@ -132,36 +132,35 @@
       </div>
     </section>
 
-    <!-- Signup Popup -->
-    <div id="signupPopup" class="popup">
-      <div class="popup-content">
-        <span class="close-btn">×</span>
-        <h2 class="text-2xl font-bold text-dark mb-6">Sign Up</h2>
-        <div id="phoneForm">
-          <div class="mb-4">
-            <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
-            <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="+91 123 456 7890">
-            <p id="phoneError" class="error">Please enter a valid phone number</p>
-          </div>
-          <button class="w-full bg-success text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">Send OTP</button>
-        </div>
-        <div id="otpForm" class="hidden">
-          <div class="mb-4">
-            <label for="otp" class="block text-gray-700 font-medium mb-2">Enter OTP</label>
-            <input type="text" id="otp" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Enter 6-digit OTP">
-            <p id="otpError" class="error">Invalid OTP</p>
-          </div>
-          <button class="w-full bg-success text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">Verify OTP</button>
-        </div>
-        <p class="text-center text-gray-600 my-4">OR</p>
-        <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors flex items-center justify-center gap-2">
-          <svg class="w-5 h-5" viewBox="0 0 24 24">
-            <path fill="#fff" d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.556-.252-2.297h-11.268z"/>
-          </svg>
-          Sign in with Google
-        </button>
+    <!-- Signup Modal -->
+  <div id="signupPopup" class="fixed inset-0 hidden bg-black bg-opacity-50 z-50 items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+      <button class="close-btn absolute top-2 right-2 text-gray-600 hover:text-gray-900">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Get Started</h2>
+
+      <!-- Phone Form -->
+      <div id="phoneForm">
+        <input type="tel" id="phone" placeholder="Enter phone number (+91...)" class="w-full mb-2 p-2 border rounded">
+        <div id="phoneError" class="text-red-500 text-sm hidden mb-2">Invalid phone number</div>
+        <button class="w-full bg-blue-600 text-white p-2 rounded">Send OTP</button>
       </div>
+
+      <!-- OTP Form -->
+      <div id="otpForm" class="hidden">
+        <input type="text" id="otp" placeholder="Enter OTP" class="w-full mb-2 p-2 border rounded">
+        <div id="otpError" class="text-red-500 text-sm hidden mb-2">Invalid OTP</div>
+        <button class="w-full bg-green-600 text-white p-2 rounded">Verify OTP</button>
+      </div>
+
+      <div class="text-center my-4 text-gray-400">or</div>
+
+      <!-- Google Sign-In Button -->
+      <button class="w-full bg-red-600 text-white p-2 rounded">Sign in with Google</button>
+
+      <!-- reCAPTCHA Container -->
+      <div id="recaptcha-container" class="mt-4"></div>
     </div>
+  </div>
 
     <!-- Target Audience -->
     <section class="py-16 bg-white">
@@ -425,11 +424,8 @@
     </footer>
 
     <!-- Firebase SDK -->
-    <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-      import { getAuth, signInWithPhoneNumber, RecaptchaVerifier, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-      window.firebase = { initializeApp, getAuth, signInWithPhoneNumber, RecaptchaVerifier, GoogleAuthProvider, signInWithPopup };
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
     <script src="script.js" defer></script>
   </body>
 </html>
