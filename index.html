@@ -943,15 +943,28 @@
 
         const email = document.getElementById("signupEmailPhone").value;
         const password = document.getElementById("signupPassword").value;
-        const confirmPassword = document.getElementById(
-          "signupConfirmPassword"
-        ).value;
+        const confirmPassword = document.getElementById("signupConfirmPassword").value;
 
+        if (!email || !password || !confirmPassword) {
+          showMessage("Please fill in all fields!", "info");
+          return;
+        }
         if (password !== confirmPassword) {
           showMessage("Passwords do not match! Please try again.", "info");
           return;
         }
-
+        if (password.length < 8) {
+          showMessage("Password must be at least 6 characters long!", "info");
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showMessage("Please enter a valid email address!", "info");
+          return;
+        }
+        if (!/^[a-zA-Z0-9]+$/.test(password)) {
+          showMessage("Password can only contain letters and numbers!", "info");
+          return;
+        }       
         try {
           const userCredential = await createUserWithEmailAndPassword(
             auth,
@@ -963,7 +976,8 @@
           closeSignupPopup();
           showMessage("Account created successfully! ", "success");
           console.log("User signed up:", user);
-        } catch (error) {
+        } 
+        catch (error) {
           console.error("Error signing up:", error);
           showMessage("Error creating account: " + error.message, "info");
         }
