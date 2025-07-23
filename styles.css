@@ -41,3 +41,37 @@ nav {
     transform: translateY(-20px);
   }
 }
+
+/* Signup Modal Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .modal-content {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .google-btn:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
