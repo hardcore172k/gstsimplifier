@@ -911,78 +911,7 @@
     </div>
 
     <script src="script.js" defer></script>
-    <script type="module">
-      // Import the functions you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-      } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-      // Your Firebase config
-      const firebaseConfig = {
-        apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
-        authDomain: "gst-simplifier.firebaseapp.com",
-        projectId: "gst-simplifier",
-        storageBucket: "gst-simplifier.firebasestorage.app",
-        messagingSenderId: "704017540712",
-        appId: "1:704017540712:web:df1055d0c25f3db2e23ddd",
-        measurementId: "G-9DF880JR15",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-      const auth = getAuth(app);
-
-      // Function to handle user signup
-      async function handleSignup(event) {
-        event.preventDefault();
-
-        const email = document.getElementById("signupEmailPhone").value;
-        const password = document.getElementById("signupPassword").value;
-        const confirmPassword = document.getElementById("signupConfirmPassword").value;
-
-        if (!email || !password || !confirmPassword) {
-          showMessage("Please fill in all fields!", "info");
-          return;
-        }
-        if (password !== confirmPassword) {
-          showMessage("Passwords do not match! Please try again.", "info");
-          return;
-        }
-        if (password.length < 8) {
-          showMessage("Password must be at least 6 characters long!", "info");
-          return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          showMessage("Please enter a valid email address!", "info");
-          return;
-        }
-        if (!/^[a-zA-Z0-9]+$/.test(password)) {
-          showMessage("Password can only contain letters and numbers!", "info");
-          return;
-        }       
-        try {
-          const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-          const user = userCredential.user;
-
-          closeSignupPopup();
-          showMessage("Account created successfully! ", "success");
-          console.log("User signed up:", user);
-        } 
-        catch (error) {
-          console.error("Error signing up:", error);
-          showMessage("Error creating account: " + error.message, "info");
-        }
-      }
-    </script>
     <script>
       function openSigninPopup() {
         document.getElementById("signinPopup").classList.remove("hidden");
@@ -1089,7 +1018,6 @@
         document.body.style.overflow = "hidden";
       }
 
-
       function closeSignupPopup() {
         document.getElementById("signupPopup").classList.add("hidden");
         document.body.style.overflow = "auto";
@@ -1133,6 +1061,79 @@
           closeSignupPopup();
         }
       });
+    </script>
+    <script type="module">
+      // Import the functions you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+      // Your Firebase config
+      const firebaseConfig = {
+        apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
+        authDomain: "gst-simplifier.firebaseapp.com",
+        projectId: "gst-simplifier",
+        storageBucket: "gst-simplifier.appspot.com", // ✅ Fixed here
+        messagingSenderId: "704017540712",
+        appId: "1:704017540712:web:df1055d0c25f3db2e23ddd",
+        measurementId: "G-9DF880JR15",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      // Function to handle user signup
+      async function handleSignup(event) {
+        event.preventDefault();
+
+        const email = document.getElementById("signupEmailPhone").value;
+        const password = document.getElementById("signupPassword").value;
+        const confirmPassword = document.getElementById(
+          "signupConfirmPassword"
+        ).value;
+
+        if (!email || !password || !confirmPassword) {
+          showMessage("Please fill in all fields!", "info");
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showMessage("Please enter a valid email address!", "info");
+          return;
+        }
+        if (password !== confirmPassword) {
+          showMessage("Passwords do not match! Please try again.", "info");
+          return;
+        }
+        if (password.length < 8) {
+          showMessage("Password must be at least 8 characters long!", "info");
+          return;
+        }
+        if (!/^[a-zA-Z0-9]+$/.test(password)) {
+          showMessage("Password can only contain letters and numbers!", "info");
+          return;
+        }
+        try {
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+
+          closeSignupPopup();
+          showMessage("Account created successfully! ", "success");
+          console.log("User signed up:", user);
+        } catch (error) {
+          console.error("Error signing up:", error);
+          showMessage("Error creating account: " + error.message, "info");
+        }
+      }
     </script>
   </body>
 </html>
