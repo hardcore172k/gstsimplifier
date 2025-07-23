@@ -614,7 +614,7 @@
             </div>
 
             <!-- Sign In Form -->
-            <form onsubmit="handleSignin(event)" class="space-y-6">
+            <form id="signinForm" class="space-y-6">
               <!-- Email/Phone Field -->
               <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2"
@@ -622,6 +622,7 @@
                 >
                 <input
                   type="text"
+                  id="signinEmailPhone"
                   placeholder="Enter your email or phone number"
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
                   required
@@ -635,10 +636,22 @@
                 >
                 <input
                   type="password"
+                  id="signinPassword"
                   placeholder="Enter your password"
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
                   required
                 />
+              </div>
+
+              <!-- Forgot Password Link -->
+              <div class="text-right mb-4">
+                <button
+                  type="button"
+                  onclick="openForgotPasswordPopup()"
+                  class="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                >
+                  Forgot Password?
+                </button>
               </div>
 
               <!-- Sign In Button -->
@@ -667,7 +680,7 @@
 
             <!-- Google Sign In -->
             <button
-              onclick="handleGoogleSignin()"
+              id="googleSigninButton"
               class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 rounded-lg font-medium transition-all duration-200 google-btn flex items-center justify-center space-x-3"
             >
               <!-- Google Icon SVG -->
@@ -697,7 +710,7 @@
               <p class="text-gray-600">
                 Don't have an account?
                 <button
-                  onclick="openSignupPopup()"
+                  onclick="handleSignupClick()"
                   class="text-blue-600 hover:text-blue-800 font-medium underline"
                 >
                   Sign up now
@@ -830,7 +843,7 @@
             </div>
 
             <!-- Sign Up Form -->
-            <form onsubmit="handleSignup(event)" class="space-y-6">
+            <form id="signupForm" class="space-y-6">
               <!-- Email/Phone Field -->
               <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2"
@@ -899,6 +912,76 @@
       </div>
     </div>
 
+    <!-- Forgot Password Popup (Hidden by default) -->
+    <div
+      id="forgotPasswordPopup"
+      class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop hidden z-50"
+    >
+      <div class="min-h-screen flex items-center justify-center px-4">
+        <div
+          class="bg-white rounded-2xl shadow-2xl w-full max-w-md modal-content relative"
+        >
+          <!-- Close Button -->
+          <button
+            onclick="closeForgotPasswordPopup()"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+          >
+            ×
+          </button>
+
+          <div class="p-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                Reset Password
+              </h2>
+              <p class="text-gray-600">
+                Enter your email or phone to reset your password
+              </p>
+            </div>
+
+            <!-- Forgot Password Form -->
+            <form onsubmit="handleForgotPassword(event)" class="space-y-6">
+              <!-- Email/Phone Field -->
+              <div>
+                <label class="block text-gray-700 text-sm font-medium mb-2"
+                  >Email or Phone</label
+                >
+                <input
+                  type="text"
+                  id="forgotPasswordEmailPhone"
+                  placeholder="Enter your email or phone number"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+                  required
+                />
+              </div>
+
+              <!-- Send Reset Link Button -->
+              <button
+                type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+              >
+                Send Reset Link
+              </button>
+            </form>
+
+            <!-- Back to Sign In -->
+            <div class="text-center mt-6">
+              <p class="text-gray-600">
+                Remember your password?
+                <button
+                  onclick="backToSignin()"
+                  class="text-blue-600 hover:text-blue-800 font-medium underline"
+                >
+                  Back to Sign In
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Success/Info Messages -->
     <div
       id="messageBox"
@@ -909,8 +992,6 @@
         <span id="messageText"></span>
       </div>
     </div>
-
-    <script src="script.js" defer></script>
 
     <script>
       function openSigninPopup() {
@@ -1007,13 +1088,43 @@
         showMessage("Google sign-in initiated! (Demo mode)", "success");
       }
 
+      function openForgotPasswordPopup() {
+        closeSigninPopup();
+        document
+          .getElementById("forgotPasswordPopup")
+          .classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeForgotPasswordPopup() {
+        document.getElementById("forgotPasswordPopup").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      }
+
+      function backToSignin() {
+        closeForgotPasswordPopup();
+        openSigninPopup();
+      }
+
+      function handleForgotPassword(event) {
+        event.preventDefault();
+        const emailPhone = document.getElementById(
+          "forgotPasswordEmailPhone"
+        ).value;
+        if (!emailPhone) {
+          showMessage("Please enter your email or phone number!", "info");
+          return;
+        }
+        closeForgotPasswordPopup();
+        showMessage("Password reset link sent! (Demo mode)", "success");
+      }
+
       function handleSignupClick() {
         closeSigninPopup();
         openSignupPopup();
       }
 
       function openSignupPopup() {
-        closeSigninPopup();
         document.getElementById("signupPopup").classList.remove("hidden");
         document.body.style.overflow = "hidden";
       }
@@ -1026,6 +1137,12 @@
       function switchToSignin() {
         closeSignupPopup();
         openSigninPopup();
+      }
+
+      function handleSignup(event) {
+        event.preventDefault();
+        closeSignupPopup();
+        showMessage("Account created successfully! (Demo mode)", "success");
       }
 
       // Close popup when clicking outside
@@ -1053,50 +1170,86 @@
           }
         });
 
+      document
+        .getElementById("forgotPasswordPopup")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeForgotPasswordPopup();
+          }
+        });
+
       // Close popup with Escape key
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           closeSigninPopup();
           closeOtpPopup();
           closeSignupPopup();
+          closeForgotPasswordPopup();
         }
       });
     </script>
     <script type="module">
-      // Import the functions you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
       import {
         getAuth,
         createUserWithEmailAndPassword,
         signInWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup,
+        signInWithPhoneNumber,
+        RecaptchaVerifier,
       } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+      import {
+        getFunctions,
+        httpsCallable,
+      } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-functions.js";
 
-      // Your Firebase config
       const firebaseConfig = {
         apiKey: "AIzaSyBKTeUUG3c49q4NEjbPpVltAHhQikUBj8U",
         authDomain: "gst-simplifier.firebaseapp.com",
         projectId: "gst-simplifier",
-        storageBucket: "gst-simplifier.appspot.com", // ✅ Fixed here
+        storageBucket: "gst-simplifier.appspot.com",
         messagingSenderId: "704017540712",
         appId: "1:704017540712:web:df1055d0c25f3db2e23ddd",
         measurementId: "G-9DF880JR15",
       };
 
-      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
       const auth = getAuth(app);
+      const functions = getFunctions(app);
 
-      // Function to handle user signup
+      let recaptchaVerifier;
+      let confirmationResult;
+      let inputType;
+
+      function initializeRecaptcha() {
+        if (!recaptchaVerifier) {
+          recaptchaVerifier = new RecaptchaVerifier(
+            auth,
+            "recaptcha-container",
+            {
+              size: "invisible",
+              callback: () => {
+                console.log("reCAPTCHA verified");
+              },
+              "expired-callback": () => {
+                showMessage("reCAPTCHA expired. Please try again.", "info");
+              },
+            }
+          );
+        }
+      }
+
+      // Signup function
       async function handleSignup(event) {
         event.preventDefault();
-
+        console.log("handleSignup called");
         const email = document.getElementById("signupEmailPhone").value;
         const password = document.getElementById("signupPassword").value;
         const confirmPassword = document.getElementById(
           "signupConfirmPassword"
         ).value;
+        console.log("Input values:", { email, password, confirmPassword });
 
         if (!email || !password || !confirmPassword) {
           showMessage("Please fill in all fields!", "info");
@@ -1110,31 +1263,139 @@
           showMessage("Passwords do not match! Please try again.", "info");
           return;
         }
-        if (password.length < 8) {
-          showMessage("Password must be at least 8 characters long!", "info");
+        if (password.length < 6) {
+          showMessage("Password must be at least 6 characters long!", "info");
           return;
         }
-        if (!/^[a-zA-Z0-9]+$/.test(password)) {
-          showMessage("Password can only contain letters and numbers!", "info");
+        if (
+          !/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/.test(
+            password
+          )
+        ) {
+          showMessage(
+            "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+            "info"
+          );
           return;
         }
         try {
+          console.log("Attempting to create user...");
           const userCredential = await createUserWithEmailAndPassword(
             auth,
             email,
             password
           );
           const user = userCredential.user;
-
+          console.log("User created:", user);
           closeSignupPopup();
-          showMessage("Account created successfully! ", "success");
-          console.log("User signed up:", user);
+          openSigninPopup();
+          showMessage("Account created successfully!", "success");
+          showMessage("Please sign in to continue.", "info");
         } catch (error) {
-          console.error("Error signing up:", error);
-          showMessage("Error creating account: " + error.message, "info");
+          console.error("Signup error:", error.code, error.message);
+          let errorMessage = "Error creating account. Please try again.";
+          switch (error.code) {
+            case "auth/email-already-in-use":
+              errorMessage =
+                "This email is already registered. Try signing in.";
+              break;
+            case "auth/invalid-email":
+              errorMessage =
+                "Invalid email address. Please check and try again.";
+              break;
+            case "auth/weak-password":
+              errorMessage = "Password is too weak. Use at least 6 characters.";
+              break;
+            case "auth/network-request-failed":
+              errorMessage =
+                "Network error. Please check your connection and try again.";
+              break;
+            default:
+              errorMessage = error.message;
+          }
+          showMessage(errorMessage, "info");
         }
-        console.log("Email:", email, "Password:", password);
       }
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", handleSignup);
+
+      // Sign In with Email and Password
+      async function handleSignin(event) {
+        event.preventDefault();
+        const email = document.getElementById("signinEmailPhone").value;
+        const password = document.getElementById("signinPassword").value;
+        if (!email || !password) {
+          showMessage("Please fill in all fields!", "info");
+          return;
+        }
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          const user = userCredential.user;
+          console.log("User signed in:", user);
+          closeSigninPopup();
+          showMessage("Sign in successful!", "success");
+        } catch (error) {
+          console.error("Sign in error:", error.code, error.message);
+          let errorMessage = "Error signing in. Please try again.";
+          switch (error.code) {
+            case "auth/user-not-found":
+              errorMessage = "No account found with this email.";
+              break;
+            case "auth/wrong-password":
+              errorMessage = "Incorrect password. Please try again.";
+              break;
+            case "auth/invalid-email":
+              errorMessage =
+                "Invalid email address. Please check and try again.";
+              break;
+            case "auth/network-request-failed":
+              errorMessage =
+                "Network error. Please check your connection and try again.";
+              break;
+            default:
+              errorMessage = error.message;
+          }
+          showMessage(errorMessage, "info");
+        }
+      }
+      document
+        .getElementById("signinForm")
+        .addEventListener("submit", handleSignin);
+
+      // Google Sign-In
+      async function handleGoogleSignin() {
+        try {
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
+          console.log("Google user signed in:", user);
+          closeSigninPopup();
+          showMessage("Google sign-in successful!", "success");
+        } catch (error) {
+          console.error("Google sign-in error:", error.code, error.message);
+          let errorMessage = "Error signing in with Google. Please try again.";
+          switch (error.code) {
+            case "auth/popup-closed-by-user":
+              errorMessage = "Sign-in popup closed by user.";
+              break;
+            case "auth/network-request-failed":
+              errorMessage =
+                "Network error. Please check your connection and try again.";
+              break;
+            default:
+              errorMessage = error.message;
+          }
+          showMessage(errorMessage, "info");
+        } 
+      }
+      document
+        .getElementById("googleSigninButton")
+        .addEventListener("click", handleGoogleSignin);
     </script>
   </body>
 </html>
