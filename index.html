@@ -941,7 +941,7 @@
             </div>
 
             <!-- Forgot Password Form -->
-            <form onsubmit="handleForgotPassword(event)" class="space-y-6">
+            <form id="forgotPasswordPopup" class="space-y-6">
               <!-- Email/Phone Field -->
               <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2"
@@ -1198,6 +1198,7 @@
         signInWithPopup,
         signInWithPhoneNumber,
         RecaptchaVerifier,
+        sendPasswordResetEmail,
       } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
       import {
         getFunctions,
@@ -1396,6 +1397,41 @@
       document
         .getElementById("googleSigninButton")
         .addEventListener("click", handleGoogleSignin);
+
+      //passwoerd reset
+      async function handleForgotPassword(event) {
+        event.preventDefault();
+        const emailPhone = document.getElementById("forgotPasswordEmailPhone").value;
+        if (!emailPhone) {
+          showMessage("Please enter your email or phone number!", "info");
+          return;
+        }
+        try {           
+          await sendPasswordResetEmail(auth, emailPhone);
+          closeForgotPasswordPopup();
+          showMessage("Password reset link sent! (Demo mode)", "success");
+        } catch (error) {
+          console.error("Forgot password error:", error.code, error.message);
+          let errorMessage = "Error sending password reset link. Please try again.";
+          switch (error.code) {
+            case "auth/user-not-found":
+              errorMessage = "No account found with this email.";
+              break;
+            case "auth/invalid-email":
+              errorMessage = "Invalid email address. Please check and try again.";
+              break;
+            case "auth/network-request-failed":
+              errorMessage = "Network error. Please check your connection and try again.";
+              break;
+            default:
+              errorMessage = error.message;
+          }
+          showMessage(errorMessage, "info");
+        }
+      }
+      document
+        .getElementById("forgotPasswordPopup")
+        .addEventListener("submit", handleForgotPassword);    
     </script>
   </body>
 </html>
