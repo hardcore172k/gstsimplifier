@@ -1340,6 +1340,8 @@
           console.log("User signed in:", user);
           closeSigninPopup();
           showMessage("Sign in successful!", "success");
+          // Redirect to dashboard.html after successful sign-in
+          window.location.href = "dashboard.html";
         } catch (error) {
           console.error("Sign in error:", error.code, error.message);
           let errorMessage = "Error signing in. Please try again.";
@@ -1377,6 +1379,8 @@
           console.log("Google user signed in:", user);
           closeSigninPopup();
           showMessage("Google sign-in successful!", "success");
+          // Redirect to dashboard.html after successful Google sign-in
+          window.location.href = "dashboard.html";
         } catch (error) {
           console.error("Google sign-in error:", error.code, error.message);
           let errorMessage = "Error signing in with Google. Please try again.";
