@@ -1392,7 +1392,7 @@
               errorMessage = error.message;
           }
           showMessage(errorMessage, "info");
-        } 
+        }
       }
       document
         .getElementById("googleSigninButton")
@@ -1401,27 +1401,44 @@
       //passwoerd reset
       async function handleForgotPassword(event) {
         event.preventDefault();
-        const emailPhone = document.getElementById("forgotPasswordEmailPhone").value;
-        if (!emailPhone) {
-          showMessage("Please enter your email or phone number!", "info");
+        const email = document.getElementById("forgotPasswordEmailPhone").value;
+        console.log("handleForgotPassword triggered with email:", email); // Debug
+        if (!email) {
+          showMessage("Please enter your Gmail address!", "info");
           return;
         }
-        try {           
-          await sendPasswordResetEmail(auth, emailPhone);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showMessage(
+            "Please enter a valid Gmail address (e.g., name@gmail.com)!",
+            "info"
+          );
+          return;
+        }
+        try {
+          console.log("Calling sendPasswordResetEmail for:", email); // Debug
+          await sendPasswordResetEmail(auth, email);
+          console.log("sendPasswordResetEmail executed successfully"); // Debug
           closeForgotPasswordPopup();
-          showMessage("Password reset link sent! (Demo mode)", "success");
+          showMessage(
+            "Password reset link sent! Check your Gmail Inbox, Spam, or Promotions folder.",
+            "success"
+          );
         } catch (error) {
           console.error("Forgot password error:", error.code, error.message);
-          let errorMessage = "Error sending password reset link. Please try again.";
+          let errorMessage =
+            "Error sending password reset link. Please try again.";
           switch (error.code) {
             case "auth/user-not-found":
-              errorMessage = "No account found with this email.";
+              errorMessage =
+                "No account found with this Gmail address. Please sign up.";
               break;
             case "auth/invalid-email":
-              errorMessage = "Invalid email address. Please check and try again.";
+              errorMessage =
+                "Invalid Gmail address. Please check and try again.";
               break;
             case "auth/network-request-failed":
-              errorMessage = "Network error. Please check your connection and try again.";
+              errorMessage =
+                "Network error. Please check your connection and try again.";
               break;
             default:
               errorMessage = error.message;
@@ -1431,7 +1448,7 @@
       }
       document
         .getElementById("forgotPasswordPopup")
-        .addEventListener("submit", handleForgotPassword);    
+        .addEventListener("submit", handleForgotPassword);
     </script>
   </body>
 </html>
